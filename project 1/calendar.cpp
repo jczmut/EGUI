@@ -16,6 +16,7 @@ Calendar::Calendar(QWidget *parent) : QMainWindow(parent) {
     // connecting main Calendar window and the DayOfEvents window
     QObject::connect(myCalendar, &CalendarWidget::activated, this, &Calendar::goToDayEvents);
 
+
 }
 
 void Calendar::goToDayEvents(const QDate &date) {
@@ -49,7 +50,7 @@ bool Calendar::readFromFile() {
         readEvent.description = readDescription;
 
         // adding this event to others
-        events += readEvent;
+        events.append(readEvent);
     }
     file.close();
     saveChangesInEvents();

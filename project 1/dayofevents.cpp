@@ -7,6 +7,8 @@
 #include <QDate>
 #include <QWindow>
 #include <QList>
+#include <QHeaderView>
+#include <QTableWidget>
 
 
 Calendar::DayOfEvents::DayOfEvents(QWidget *parent, QList<Event> &parentsEvents, const QDate &date) : QDialog(parent), events(parentsEvents) {
@@ -28,12 +30,18 @@ Calendar::DayOfEvents::DayOfEvents(QWidget *parent, QList<Event> &parentsEvents,
     // now the buttons
     QPushButton *addButton = new QPushButton(this);
     addButton->setText("Add new");
-    QPushButton *editButton = new QPushButton(this);
+    editButton = new QPushButton(this);
     editButton->setText("Edit");
-    QPushButton *deleteButton = new QPushButton("Delete", this);
+    deleteButton = new QPushButton("Delete", this);
     deleteButton->setText("Delete");
     QPushButton *cancelButton = new QPushButton(this);
     cancelButton->setText("Cancel");
+
+    // edit and delete buttons are to be active only when an entry on the list is selected
+    editButton->setEnabled(false);
+    deleteButton->setEnabled(false);
+
+    connect(tableOfEvents, &QTableWidget::cellClicked, this, &Calendar::DayOfEvents::enableButtons);
 
     QGridLayout* layout = new QGridLayout;
     layout->addWidget(tableOfEvents, 0, 0, 1, 2);
@@ -44,12 +52,13 @@ Calendar::DayOfEvents::DayOfEvents(QWidget *parent, QList<Event> &parentsEvents,
 
     setLayout(layout);
 
+
     // clicking cancel -> closes the window
     QObject::connect(cancelButton, &QPushButton::clicked, this, &QPushButton::close);
     // clicking add new -> signals to slot addNewEvent
     QObject::connect(addButton, &QPushButton::clicked, this, &Calendar::DayOfEvents::addNewEvent);
 
-
+    //fillTableOfEvents();
 
 }
 
@@ -58,13 +67,25 @@ void Calendar::DayOfEvents::addNewEvent() {
     Event newEvent;
     newEvent.date = thisDay;
 
-    SingleEvent eventToAdd(this, newEvent);
+    SingleEvent eventToAdd(this, newEvent, *this);
 
 
     eventToAdd.exec();
 
     connect(&eventToAdd, &Calendar::DayOfEvents::SingleEvent::newEventSaved, this, &Calendar::DayOfEvents::fillTableOfEvents);
-    //emit changeOccured();
+}
+
+void Calendar::DayOfEvents::editEvent() {
+    Event editedEvent;
+    editedEvent.date = thisDay;
+
+    SingleEvent eventToEdit(this, editedEvent, *this);
+
+    eventToEdit.exec();
+}
+
+void Calendar::DayOfEvents::deleteEvent() {
+
 }
 
 void Calendar::DayOfEvents::fillTableOfEvents() {
@@ -81,7 +102,13 @@ void Calendar::DayOfEvents::fillTableOfEvents() {
 
         }
     }
+    tableOfEvents->sortByColumn(0,Qt::AscendingOrder);
     emit changeOccured();
 
+}
+
+void Calendar::DayOfEvents::enableButtons() {
+    editButton->setEnabled(true);
+    deleteButton->setEnabled(true);
 }
 

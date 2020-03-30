@@ -2,7 +2,7 @@
 #include "ui_singleevent.h"
 
 
-Calendar::DayOfEvents::SingleEvent::SingleEvent(QWidget *parent, Calendar::Event& event) : QDialog(parent), thisEvent(event)
+Calendar::DayOfEvents::SingleEvent::SingleEvent(QWidget *parent, Calendar::Event& event, DayOfEvents &owner) : QDialog(parent), thisEvent(event), owner(&owner)
    //ui(new Ui::SingleEvent)
 {
     ui.setupUi(this);
@@ -21,7 +21,7 @@ void Calendar::DayOfEvents::SingleEvent::saveEvent() {
 
     thisEvent.time = findChild<QTimeEdit*>("timeEdit")->time();
     thisEvent.description = findChild<QLineEdit*>("lineEdit")->text();
-    events.append(&thisEvent);
+    owner->events.append(thisEvent);
 
     emit newEventSaved();
     close();
