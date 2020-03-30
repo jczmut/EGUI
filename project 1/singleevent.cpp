@@ -21,6 +21,7 @@ void Calendar::DayOfEvents::SingleEvent::saveEvent() {
 
     thisEvent.time = findChild<QTimeEdit*>("timeEdit")->time();
     thisEvent.description = findChild<QLineEdit*>("lineEdit")->text();
+    events.append(&thisEvent);
 
     emit newEventSaved();
     close();
