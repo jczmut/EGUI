@@ -12,6 +12,7 @@ Calendar::Calendar(QWidget *parent) : QMainWindow(parent) {
     setCentralWidget((myCalendar));
     myCalendar->setGridVisible(true);
     myCalendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    myCalendar->setSelectedDate(QDate::currentDate());
 
     // connecting main Calendar window and the DayOfEvents window
     QObject::connect(myCalendar, &CalendarWidget::activated, this, &Calendar::goToDayEvents);
@@ -31,7 +32,7 @@ void Calendar::goToDayEvents(const QDate &date) {
 bool Calendar::readFromFile() {
     QFile file("myEvents.txt");
 
-    if (!file.open(QIODevice::ReadOnly)) {
+    if (!file.open(QIODevice::ReadWrite)) {
             qWarning("Failed to open file.");
             return false;
     }
@@ -60,7 +61,7 @@ bool Calendar::readFromFile() {
 bool Calendar::writeIntoFile() {
     QFile file("myEvents.txt");
 
-    if (!file.open(QIODevice::ReadOnly)) {
+    if (!file.open(QIODevice::ReadWrite)) {
             qWarning("Failed to open file.");
             return false;
     }
