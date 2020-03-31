@@ -88,7 +88,7 @@ class Calendar::DayOfEvents::SingleEvent : public QDialog {
 
 public:
      SingleEvent(QWidget* parent, bool add, Calendar::Event& event);
-
+     ~SingleEvent();
      Ui::SingleEvent ui;
 
 private:

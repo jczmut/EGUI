@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>407</width>
+    <width>409</width>
     <height>164</height>
    </rect>
   </property>
@@ -44,15 +44,8 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QTimeEdit" name="timeEdit">
-        <property name="maximumSize">
-         <size>
-          <width>81</width>
-          <height>26</height>
-         </size>
-        </property>
-       </widget>
+      <item alignment="Qt::AlignLeft">
+       <widget class="QTimeEdit" name="timeEdit"/>
       </item>
      </layout>
     </item>

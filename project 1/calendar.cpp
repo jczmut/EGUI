@@ -32,7 +32,7 @@ void Calendar::goToDayEvents(const QDate &date) {
 bool Calendar::readFromFile() {
     QFile file("myEvents.txt");
 
-    if (!file.open(QIODevice::ReadWrite)) {
+    if (!file.open(QIODevice::ReadOnly)) {
             qWarning("Failed to open file.");
             return false;
     }
@@ -51,7 +51,7 @@ bool Calendar::readFromFile() {
         readEvent.description = readDescription;
 
         // adding this event to others
-        events.append(readEvent);
+        events += readEvent;
     }
     file.close();
     saveChangesInEvents();
@@ -61,7 +61,7 @@ bool Calendar::readFromFile() {
 bool Calendar::writeIntoFile() {
     QFile file("myEvents.txt");
 
-    if (!file.open(QIODevice::ReadWrite)) {
+    if (!file.open(QIODevice::WriteOnly)) {
             qWarning("Failed to open file.");
             return false;
     }
@@ -79,12 +79,8 @@ bool Calendar::writeIntoFile() {
 
 void Calendar::saveChangesInEvents() {
 
-    readFromFile();
-
     QList<QDate> datesToMark;
-
     QList<Event>::iterator it;
-    readFromFile();
 
     for(it = events.begin(); it != events.end(); ++it) {
         datesToMark += it->date;
