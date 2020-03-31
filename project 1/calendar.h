@@ -31,7 +31,7 @@ private:
 
     QList<Event> events;
 
-    CalendarWidget* calendar;
+    CalendarWidget* myCalendar;
 
 public slots:
 
@@ -54,24 +54,29 @@ public:
     DayOfEvents(QWidget* parent, QList<Event>& events, const QDate& date);
 
 private:
-    class SingleEvent;
 
+    QList<Event>& copiedEvents;
     QDate thisDay;
     QTableWidget* tableOfEvents;
-    QList<Event> events;
     QPushButton* editButton;
     QPushButton* deleteButton;
+    class SingleEvent;
 
 signals:
     void changeOccured();
+    void newEventSaved();
+    void editedEventSaved();
+    void deletedEvent();
 
 public slots:
     void addNewEvent();
+    void finishSavingNewEvent(Calendar::Event);
     void deleteEvent();
     void editEvent();
+    void finishSavingEditedEvent(Calendar::Event);
     void fillTableOfEvents();
     void enableButtons();
-
+    void disableButtons();
 
 };
 
@@ -82,19 +87,20 @@ class Calendar::DayOfEvents::SingleEvent : public QDialog {
      Q_OBJECT
 
 public:
-     SingleEvent(QWidget* parent, Calendar::Event& event, DayOfEvents &owner);
+     SingleEvent(QWidget* parent, bool add, Calendar::Event& event);
 
      Ui::SingleEvent ui;
 
 private:
-     Calendar::Event thisEvent;
-     Calendar::DayOfEvents *const owner;
+     Calendar::Event &thisEvent;
+     bool isToBeAdded;
 
 signals:
-     void newEventSaved();
+     void passEventToSave(Calendar::Event);
 
 private slots:
      void saveEvent();
+     void closeEvent();
 
 };
 

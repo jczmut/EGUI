@@ -5,8 +5,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Calendar myCalendar;
-    myCalendar.show();
+    Calendar c;
+    c.show();
 
     return a.exec();
 }

@@ -8,7 +8,7 @@
 Calendar::Calendar(QWidget *parent) : QMainWindow(parent) {
 
     setMinimumSize(QSize(600, 400));
-    CalendarWidget *myCalendar = new CalendarWidget(this);
+    myCalendar = new CalendarWidget(this);
     setCentralWidget((myCalendar));
     myCalendar->setGridVisible(true);
     myCalendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
@@ -78,15 +78,18 @@ bool Calendar::writeIntoFile() {
 
 void Calendar::saveChangesInEvents() {
 
+    readFromFile();
+
     QList<QDate> datesToMark;
 
     QList<Event>::iterator it;
+    readFromFile();
 
     for(it = events.begin(); it != events.end(); ++it) {
         datesToMark += it->date;
     }
 
-    calendar->updateMarkedDates(datesToMark);
+    myCalendar->updateMarkedDates(datesToMark);
 }
 
 Calendar::~Calendar(){}

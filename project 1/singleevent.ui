@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -88,7 +88,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>140</x>
@@ -99,16 +99,16 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
-     <widget class="QPushButton" name="cancelButton">
+     <widget class="QPushButton" name="saveButton">
       <property name="text">
-       <string>Cancel</string>
+       <string>Save</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="saveButton">
+     <widget class="QPushButton" name="cancelButton">
       <property name="text">
-       <string>Save</string>
+       <string>Cancel</string>
       </property>
      </widget>
     </item>
