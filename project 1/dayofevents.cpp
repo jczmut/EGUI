@@ -16,7 +16,7 @@ Calendar::DayOfEvents::DayOfEvents(QWidget *parent, QList<Event> &parentsEvents,
     thisDay = date;
 
     setWindowTitle(date.toString("dd-MM-yyyy"));
-    setMinimumSize(QSize(400, 400));
+    setMinimumSize(QSize(400, 300));
 
     // working on the table
     tableOfEvents = new QTableWidget(this);
