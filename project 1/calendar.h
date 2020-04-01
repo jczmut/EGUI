@@ -12,8 +12,7 @@
 #include <QDialog>
 #include <QTableWidget>
 
-class Calendar : public QMainWindow
-{
+class Calendar : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -38,7 +37,6 @@ public slots:
     void goToDayEvents(const QDate& date);
     bool readFromFile();
     bool writeIntoFile();
-
 
 private slots:
     void saveChangesInEvents();
@@ -71,9 +69,9 @@ signals:
 public slots:
     void addNewEvent();
     void finishSavingNewEvent(Calendar::Event);
-    void deleteEvent();
     void editEvent();
     void finishSavingEditedEvent(Calendar::Event);
+    void deleteEvent();
     void fillTableOfEvents();
     void enableButtons();
     void disableButtons();
@@ -81,7 +79,6 @@ public slots:
 };
 
 //-------------------------------------------------
-
 
 class Calendar::DayOfEvents::SingleEvent : public QDialog {
      Q_OBJECT

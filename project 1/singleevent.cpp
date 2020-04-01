@@ -6,20 +6,21 @@ Calendar::DayOfEvents::SingleEvent::SingleEvent(QWidget *parent, bool add, Calen
 
     ui.setupUi(this);
 
+    isToBeAdded = add;
+
     if(add) setWindowTitle("Add new event");
 
     if(!add) {
         setWindowTitle("Edit event");
-        ui.timeEdit->setTime(event.time);
-        ui.lineEdit->setText(event.description);
+        ui.timeEdit->setTime(thisEvent.time);
+        ui.descriptionEdit->setText(thisEvent.description);
+//        findChild<QTimeEdit*>("timeEdit")->setTime(thisEvent.time);
+//        findChild<QLineEdit*>("descriptionEdit")->setText(thisEvent.description);
     }
-
-    isToBeAdded = add;
 
     // connecting buttons
     connect(ui.saveButton, &QPushButton::clicked, this, &Calendar::DayOfEvents::SingleEvent::saveEvent);
     connect(ui.cancelButton, &QPushButton::clicked, this, &Calendar::DayOfEvents::SingleEvent::closeEvent);
-
 }
 
 Calendar::DayOfEvents::SingleEvent::~SingleEvent() {}
@@ -27,7 +28,7 @@ Calendar::DayOfEvents::SingleEvent::~SingleEvent() {}
 void Calendar::DayOfEvents::SingleEvent::saveEvent() {
 
     thisEvent.time = ui.timeEdit->time();
-    thisEvent.description = ui.lineEdit->text();
+    thisEvent.description = ui.descriptionEdit->text();
     emit passEventToSave(thisEvent);
     close();
 }

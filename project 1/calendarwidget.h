@@ -15,7 +15,7 @@ private:
     QList<QDate> datesOfEvents;
 
 protected:
-    void paintCell(QPainter* painter, const QRect& rect, const QDate& date) const;  // to override
+    void paintCell(QPainter* painter, const QRect& rect, const QDate& date) const;
 
 public slots:
     void updateMarkedDates(const QList<QDate>);

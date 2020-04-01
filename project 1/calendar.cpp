@@ -9,15 +9,13 @@ Calendar::Calendar(QWidget *parent) : QMainWindow(parent) {
 
     setMinimumSize(QSize(600, 400));
     myCalendar = new CalendarWidget(this);
-    setCentralWidget((myCalendar));
+    setCentralWidget(myCalendar);
     myCalendar->setGridVisible(true);
     myCalendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
     myCalendar->setSelectedDate(QDate::currentDate());
 
     // connecting main Calendar window and the DayOfEvents window
-    QObject::connect(myCalendar, &CalendarWidget::activated, this, &Calendar::goToDayEvents);
-
-
+    connect(myCalendar, &CalendarWidget::activated, this, &Calendar::goToDayEvents);
 }
 
 void Calendar::goToDayEvents(const QDate &date) {
@@ -78,14 +76,12 @@ bool Calendar::writeIntoFile() {
 }
 
 void Calendar::saveChangesInEvents() {
-
     QList<QDate> datesToMark;
     QList<Event>::iterator it;
 
     for(it = events.begin(); it != events.end(); ++it) {
         datesToMark += it->date;
     }
-
     myCalendar->updateMarkedDates(datesToMark);
 }
 
