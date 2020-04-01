@@ -7,7 +7,7 @@ The goal is to create a calendar app for managing events in three different tech
 ## SETUP
 ### project 1: Qt
 ```bash
-https://github.com/jczmut/EGUI.git
+git clone https://github.com/jczmut/EGUI.git
 cd EGUI/'project 1'/
 qmake
 make
