@@ -92,6 +92,9 @@ void Calendar::DayOfEvents::editEvent() {
 
     Event editedEvent;
     editedEvent.date = thisDay;
+    int row = tableOfEvents->currentItem()->row();
+    editedEvent.time = QTime::fromString(tableOfEvents->item(row, 0)->text(), "HH:mm:ss");
+    editedEvent.description = tableOfEvents->item(row, 1)->text();
 
     SingleEvent eventToEdit(this, false, editedEvent);
 
