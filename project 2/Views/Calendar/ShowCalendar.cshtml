@@ -1,0 +1,50 @@
+
+    @model CalendarViewModel
+    @{
+        ViewData["Title"] = Model.MonthName + " " + Model.Year;
+    }
+    <header>
+        <nav class="navigateMonth">
+            <ul>
+                <li class="prev"><a href="@Model.GetPreviousMonth()">&#10094;</a></li>
+                <li class="currentMonth">@Model.MonthName<br>@Model.Year</li>
+                <li class="next "><a href="@Model.GetNextMonth()">&#10095;</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <body>
+        <table class="calendar">
+        <tr class="weekdays">
+            <th id="Monday">M</th>
+            <th id="Tuesday">T</th>
+            <th id="Wednesday">W</th>
+            <th id="Thursday">T</th>
+            <th id="Friday">F</th>
+            <th id="Saturday">Sa</th>
+            <th id="Sunday">S</th>
+        </tr>
+        <class="days">
+            
+            @for(int i=0; i<@Model.DaysOfTheMonthArray.Length; i+=7) {
+                <tr>
+                    @for(int day=i; day<=(i+6); day++) {
+                        @if(day >= @Model.DaysOfTheMonthArray.Length) break;
+                        @if(@Model.DaysOfTheMonthArray[@day] == 0) {
+                            <td></td>
+                            continue;
+                        }
+                        <td>@Model.DaysOfTheMonthArray[@day]</td>
+                    }
+                </tr>  
+            }
+
+        </class>
+        
+    </table>
+    </body>
+   
+
+
+
+
