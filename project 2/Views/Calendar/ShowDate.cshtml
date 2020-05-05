@@ -1,0 +1,53 @@
+@model DayViewModel
+@{
+    ViewData["Title"] = Model.Month + " " + Model.Year;
+    ViewData["SmallVersion"] = true;
+}
+<header class="smallerHeader">
+    <h2>@Model.GetDateString</h2>
+</header>
+<body>
+    <!--<div class="headers">
+        <div class="item">
+            <div class="time">TIME</div>
+            <div class="description">DESCRIPTION</div>
+            <div class="footer"></div>
+        </div>
+    </div>
+    <ul class="events">
+        @foreach (EventViewModel singleEvent in Model.DayEvents) {
+            <p>@singleEvent.DateAndTime.ToShortTimeString()</p>
+            <p>@singleEvent.Description</p>
+            <form class="editOrDeleteButtons" method="post">
+                <input type="hidden" name="id" value="@singleEvent.Id">
+                <a class="editButton" href="edit/event@singleEvent.Id">EDIT</a>
+                <button name="deleteButton" value="delete">DELETE</button>
+            </form>
+        }
+    </ul>-->
+
+    <table class="events">
+        <th class="header">TIME</th>
+        <th class="header">DESCRIPTION</th>
+        <th class="header"></th>
+        <th class="header"></th>
+        @foreach (EventViewModel singleEvent in Model.DayEvents) {
+            <tr>
+                <td>@singleEvent.DateAndTime.ToShortTimeString()</td>
+                <td>@singleEvent.Description</td>
+                <form class="editOrDeleteButtons" method="post">
+                    <input type="hidden" name="id" value="@singleEvent.Id">
+                    <td><a class="button editButton" href="edit/event@singleEvent.Id">EDIT</a></td>
+                    <td><button name="deleteButton" value="delete">DELETE</button></td>
+                </form>
+            </tr>
+        }
+    </table>
+
+    <ul class="bottomButtons">
+        <a class="bottomButton button" href="@Model.Year-@Model.Month-@Model.Day/addNew">ADD NEW</a>
+        <a class="bottomButton button" href="@Model.Year-@Model.Month">CANCEL</a>
+
+    </ul>
+    
+</body>
