@@ -9,8 +9,35 @@ body {
     font-family: fantasy;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+footer {
+    text-align: right;
+    font-family: fantasy;
+    padding: 1px;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 80em;
+    max-height: 100%;
+}
+
+.wrapper.smallversion {
+    max-width: 30em;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ------------------------------CALENDAR VIEW-------------------------------------- */
+
 /* month header */
-.navigateMonth {
+header {
     padding: 70px, 25px;
     width: 100%;
     height: 20%;
@@ -59,10 +86,7 @@ body {
     padding: 10px;
 }
 
-/* ------------------------------------------------------ */
-
 /* main calendar part */
-
 th, td {
     text-align: center;
     padding: 15px;
@@ -75,7 +99,7 @@ td {
 
 .calendar {
     width: 100%;
-    height: 80%;
+    height: 90%;
 }
 
 /* weekdays */
@@ -91,14 +115,43 @@ td {
     font-size: 20px;
 }
 
+/* -----------------------------DAY VIEW-------------------------------------- */
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-footer {
-    text-align: right;
+.smallerHeader {
     font-family: fantasy;
-    padding: 1px;
+    color: white;
+    vertical-align: middle;
+    display: grid;
 }
+
+.events {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.events .header {
+    background-color: #d5f8ee;
+    text-align: center;
+    font-family: fantasy;
+    color: rgb(88, 87, 87);
+}
+
+button, a.button {
+    font-family: inherit;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid rgb(199, 197, 197);
+    display: inline-block;
+    padding: 0.5em;
+    color: rgb(83, 87, 87);
+    background-color: rgb(188, 202, 199);
+}
+
+.bottomButton {
+    font-size: larger;
+}
+
+/* ---------------------------------EVENT VIEW---------------------------------------------- */
+
+
+

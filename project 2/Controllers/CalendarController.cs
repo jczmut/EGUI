@@ -31,13 +31,34 @@ namespace CzmutCalendar.Controllers
             return View(toShow);
         }
 
+        [Route("{year:int}-{month:int}-{day:int}")]
         public IActionResult ShowDate(int year, int month, int day) {
             DayViewModel toShow = new DayViewModel();
             toShow.Year = year;
             toShow.Month = month;
             toShow.Day = day;
-            toShow.Events = Database.CreateEventsDatabase(year, month);
+            toShow.DayEvents = Database.ReadEventsFrom(new DateTime(year, month, day));
             return View(toShow);
+        }
+
+        [Route("{year:int}-{month:int}-{day:int}/addNew")]
+        public IActionResult AddNewEvent(int year, int month, int day) {
+            
+            return EditEvent(0, year, month, day);
+        }
+
+        [Route("edit/event{id:int}")]
+        public IActionResult EditEvent(int id, int year, int month, int day) {
+
+            EventViewModel editedEvent;
+            if(id != 0) {
+                editedEvent = Database.FindEvent(id);
+            }
+            else {
+                editedEvent = new EventViewModel(year, month, day, 0, 0);
+            }
+            
+            return View("EditEvent", editedEvent);
         }
     }
 }
