@@ -52,7 +52,7 @@ namespace CzmutCalendar {
 
         public static List<List<EventViewModel>> CreateEventsDatabase(int year, int month) {
 
-            // creating a list of lists of 
+            // creating a list of lists of events
             List<List<EventViewModel>> eventsDatabase = new List<List<EventViewModel>>();
 
             for(int i=0; i<=30; i++) {
