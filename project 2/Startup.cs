@@ -22,16 +22,7 @@ namespace CzmutCalendar
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthorization();
@@ -46,7 +37,16 @@ namespace CzmutCalendar
                     "chosenMonth", "{year}-{month}", new {controller="Calendar", action="ShowCalendar"}
                 );
                 endpoints.MapControllerRoute(
-                    "chosenDay", "{year}-{month}-{day}", new {controller="calendar", action="ShowDate"}
+                    "chosenDay", "{year}-{month}-{day}", new {controller="Calendar", action="ShowDate"}
+                );
+                endpoints.MapControllerRoute(
+                    "modifyEvent", "{year}-{month}-{day}/addNew", new {controller="Calendar", action="AddNewEvent"}
+                );
+                endpoints.MapControllerRoute(
+                    "modifyEvent", "edit/event/{id}", new {controller="Calendar", Action="ModifyEvent"}
+                );
+                endpoints.MapControllerRoute(
+                    "error", "error", new {controller="Calendar", Action="ShowError"}
                 );
             });
         }

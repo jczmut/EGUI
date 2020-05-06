@@ -7,11 +7,11 @@ namespace CzmutCalendar.Models {
         public int Year;
         public int Month;
         public int Day;
-        public List<List<EventViewModel>> Events;
+        public List<EventViewModel> DayEvents;
 
-        public string DateTimeString {
+        public string GetDateString {
             get {
-                return Year + "-" + Month + "-" + Day; 
+                return Year + "-" + "0" + Month + "-" + Day; 
             }
         }
 

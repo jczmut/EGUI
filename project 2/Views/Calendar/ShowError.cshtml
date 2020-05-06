@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Error";
+    ViewData["SmallVersion"] = true;
+}
+
+<header class="smallHeader">
+    <h2>Error occured</h2>
+</header>
+<body>
+    <div class="errors">
+        <p class="label">ERROR TYPE:</p>
+        <p>@ViewBag.ErrorType</p>
+        <p class="label">ERROR MESSAGE:</p>
+        <p>@ViewBag.ErrorMessage</p>
+    </div>
+
+    <a href="/" class="button bottomButton">GO BACK</a>
+    
+</body>
