@@ -14,5 +14,11 @@ make
 cd bin
 ./calendar
 ```
-
+### project 2: ASP.NET MVC
+```bash
+git clone https://github.com/jczmut/EGUI.git
+cd EGUI/'project 2'
+dotnet build
+dotnet run
+```
 
