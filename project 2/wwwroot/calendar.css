@@ -182,11 +182,13 @@ button, a.button {
     padding: 5px;
 }
 .inputs .timeInput {
-    width: 80px;
+    width: 100px;
+    padding: 5px;
 }
 
 .inputs .descriptionInput {
     width: 300px;
+    padding: 5px;
 }
 
 /* -----------------------------ERROR VIEW-------------------------------------- */
