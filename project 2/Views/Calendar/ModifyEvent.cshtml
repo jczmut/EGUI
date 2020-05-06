@@ -13,7 +13,7 @@
         <label for="time">TIME:</label>
         <input type="time" class="timeInput" name="time" value="@Model.DateAndTime.ToString("HH:mm")"><br>
         <label for="description">DESCRIPTION:</label>
-        <input type="text" class="descriptionInput" name="description" value="@Model.Description">
+        <input type="text" class="descriptionInput" autocomplete="off" name="description" value="@Model.Description">
     
         <div class="bottomButtons">
             <button class="bottomButton">SAVE</button>
