@@ -25,9 +25,8 @@ namespace CzmutCalendar
             app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseAuthorization();
             app.UseRouting();
-
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
