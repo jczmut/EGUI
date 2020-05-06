@@ -181,11 +181,11 @@ button, a.button {
     color: darkslategray;
 }
 .inputs .timeInput {
-    width: 40px;
+    width: 60px;
 }
 
 .inputs .descriptionInput {
-    width: 200px;
+    width: 250px;
 }
 
 /* -----------------------------ERROR VIEW-------------------------------------- */
