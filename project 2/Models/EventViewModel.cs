@@ -9,6 +9,7 @@ namespace CzmutCalendar.Models {
 
         public EventViewModel() {}
         public EventViewModel(int year, int month, int dayNum, int hour, int minute) {
+            
             DateAndTime = new DateTime(year, month, dayNum, hour, minute, 0);
         }
     }
