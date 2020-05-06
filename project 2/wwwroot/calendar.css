@@ -179,13 +179,14 @@ button, a.button {
 .inputs {
     font-family: fantasy;
     color: darkslategray;
+    padding: 5px;
 }
 .inputs .timeInput {
-    width: 60px;
+    width: 80px;
 }
 
 .inputs .descriptionInput {
-    width: 250px;
+    width: 300px;
 }
 
 /* -----------------------------ERROR VIEW-------------------------------------- */
