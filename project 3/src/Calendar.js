@@ -6,7 +6,7 @@ import DaysOfTheMonth from './DaysOfTheMonth'
 export default function Calendar( {month} ) {
 
     return (
-        <div>
+        <div className="calendar-container">
             <MonthNavigator/>
 
             <Weekdays/>

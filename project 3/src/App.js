@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
 import Calendar from './Calendar'
+import './app.css'
+import {format, parseISO, getMonth, getDay, getDaysInMonth, getYear} from 'date-fns'
 
 function App() {
-  const [month, setMonth] = useState(CURRENTMONTH)
+  const monthArray = createCurrentMonthArray()
+  const [month, setMonth] = useState(monthArray)
+
   return (
     <Calendar month={month}/>
   )
 }
 
-const CURRENTMONTH = {
-    days: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
-    startingWeekday: 0
+function createCurrentMonthArray() {
+  var today = format(new Date(), "yyyy-MM-dd")
+  var formattedDateString = today.replace(/-/g, ',')
+  var monthNumber = getMonth(new Date(formattedDateString)) + 1
+  var dayCount = getDaysInMonth(new Date(formattedDateString))
+  var startingWeekday = (getDay(new Date(`${getYear(formattedDateString)}, ${monthNumber+1}, 1`)) + 6) % 7
+  console.log(today)
+  console.log(monthNumber)
+  console.log(dayCount)
+  console.log(startingWeekday)
+  var arrayOfDays = []
+  for(let i=0; i<startingWeekday; i++) {
+    arrayOfDays.push(0)
   }
+  for(let i=0; i<dayCount; i++) {
+    arrayOfDays.push(i+1)
+  }
+  return arrayOfDays
+}
+
 
 export default App;

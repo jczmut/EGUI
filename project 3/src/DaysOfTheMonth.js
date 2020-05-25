@@ -2,10 +2,10 @@ import React from 'react'
 import Week from './Week'
 
 export default function DaysOfTheMonth( {daysOfTheMonth} ) {
-    let arrayOfWeeks = createArrayOfWeeks(daysOfTheMonth.days)
+    let arrayOfWeeks = createArrayOfWeeks(daysOfTheMonth)
 
     return (
-        <div className="month-flexbox">
+        <div className="month-grid">
             {arrayOfWeeks.map((daysOfWeek, index) => {
                 return <Week daysOfTheWeek={arrayOfWeeks[index]} key={index}/>
             })}
@@ -23,11 +23,9 @@ function createArrayOfWeeks(daysOfTheMonth) {
         for(let d=i; d<=(i+6); d++) {
             if(d >= daysOfTheMonth.length) break
             weekdays.push(daysOfTheMonth[d])
-
         }
         arrayOfWeeks.push(weekdays)
     }
-    console.log(arrayOfWeeks)
 
     return arrayOfWeeks
 }
