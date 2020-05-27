@@ -1,6 +1,20 @@
 body {
     height: 100%;
     margin: 0;
+    font-family: fantasy;
+}
+
+* {
+    outline: none;
+}
+
+button {
+    background: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    font-family: fantasy;
 }
 
 .header {
@@ -16,6 +30,11 @@ body {
     align-items: center;
     text-transform: uppercase;
     letter-spacing: 3px;
+    color: white;
+    font-size: 25px;
+}
+
+.month-navigator .prev, .next {
     color: white;
     font-size: 20px;
 }
@@ -44,5 +63,10 @@ body {
 
 .day-item {
     background-color: rgb(207, 214, 212);
+    min-height: 18px;
+}
+
+.day-item-button {
+    font-size: 15px;
 }
 

@@ -1,13 +1,13 @@
 import React from 'react'
 import Week from './Week'
 
-export default function DaysOfTheMonth( {daysOfTheMonth} ) {
+export default function DaysOfTheMonth( {daysOfTheMonth, handlePick} ) {
     let arrayOfWeeks = createArrayOfWeeks(daysOfTheMonth)
 
     return (
         <div className="month-grid">
             {arrayOfWeeks.map((daysOfWeek, index) => {
-                return <Week daysOfTheWeek={arrayOfWeeks[index]} key={index}/>
+                return <Week daysOfTheWeek={arrayOfWeeks[index]} handlePick={handlePick} key={index}/>
             })}
         </div>
     )
