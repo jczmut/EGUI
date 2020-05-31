@@ -30,7 +30,7 @@ function App() {
     useEffect(() => {
       console.log("FIRST FETCH")
       // API call
-      fetch(`/api/events/${format(currentDate, "yyyy-MM")}`)
+      fetch(`api/events/${format(currentDate, "yyyy-M")}`)
         .then(response => response.json())
         .then(data => {
           setEvents(MonthOfEvents.getFromJSON(data.eventsLists))

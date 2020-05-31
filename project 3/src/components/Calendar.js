@@ -7,14 +7,9 @@ export default function Calendar( { date, getPrevMonth, getNextMonth, handlePick
 
     function createMonthArray(date) {
         var formattedDateString = format(date, "yyyy-MM-dd")
-        // console.log(date)
-        // console.log("formatted string 1: " + formattedDateString)
         var monthNumber = getMonth(new Date(parseISO(formattedDateString)))
-        // console.log("month number: " + monthNumber)
         var dayCount = getDaysInMonth(new Date(parseISO(formattedDateString)))
         var startingWeekday = (getDay(new Date(getYear(parseISO(formattedDateString)), monthNumber, 1)) + 6) % 7
-        // console.log("dayCount: " + dayCount)
-        // console.log("starting weekday: " + startingWeekday)
         var arrayOfDays = []
         for(let i=0; i<startingWeekday; i++) {
             arrayOfDays.push(0)
@@ -22,7 +17,6 @@ export default function Calendar( { date, getPrevMonth, getNextMonth, handlePick
         for(let i=0; i<dayCount; i++) {
             arrayOfDays.push(i+1)
         }
-        // console.log(arrayOfDays)
         return arrayOfDays
     }
 
