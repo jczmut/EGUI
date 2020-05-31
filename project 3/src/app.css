@@ -8,6 +8,28 @@ body {
     outline: none;
 }
 
+footer {
+    text-align: right;
+}
+
+#mainwrapper {
+    width: 100%;
+    max-width: 80em;
+    max-height: 100%;
+}
+
+#mainwrapper.small-version {
+    max-width: 30em;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.day-editor {
+    background-color: white;
+}
+
 button {
     background: none;
     margin: 0;

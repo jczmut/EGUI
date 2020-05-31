@@ -1,0 +1,8 @@
+{
+    "name": "App",
+    "theme_color": "#f9f9f9",
+    "background_color": "#2196f3",
+    "display": "browser",
+    "scope": "/",
+    "start_url": "/"
+  }

@@ -2,14 +2,15 @@ import React, { useEffect, useReducer, useState } from 'react'
 import MonthNavigator from './MonthNavigator'
 import Weekdays from './Weekdays'
 import DaysOfTheMonth from './DaysOfTheMonth'
+import DayEditor from './DayEditor'
+import MainWrapper from './MainWrapper'
 import logger from 'use-reducer-logger'
 import { format, getMonth, getDay, getDaysInMonth, getDate, getYear, parseISO} from 'date-fns'
 
-export default function Calendar( { callback } ) {
-
-    console.log("RENDERED")
-
+export default function Calendar() {
+    
     const [onPick, setOnPick] = useState()
+    const [showDayEditor, setShowDayEditor] = useState(false)
 
     const initialState = {
         year: getYear(new Date()),
@@ -68,7 +69,8 @@ export default function Calendar( { callback } ) {
    useEffect(() => {
        console.log("ON PICK CHANGED")
        console.log(onPick)
-   }, [onPick])
+       if(showDayEditor) setActiveComponent(<DayEditor date={onPick}/>)
+   }, [onPick, showDayEditor])
 
     function handlePick(day) {
         console.log("NOTIFY ABOUT DAY PICK")
@@ -79,7 +81,25 @@ export default function Calendar( { callback } ) {
             type: 'UPDATE_CURRENT_DATE',
             payload: new Date(updatedYear, updatedMonth, pickedDay)
         })
+        setShowDayEditor(true) 
     }
+
+    const [activeComponent, setActiveComponent] = useState(
+        <>
+            <MonthNavigator
+                    getPrevMonth={getPrevMonth}
+                    getNextMonth={getNextMonth}
+                    date={new Date(year, month, day)}
+            />
+
+            <Weekdays/>
+
+            <DaysOfTheMonth
+                daysOfTheMonth={monthArray}
+                handlePick={handlePick}
+            />
+        </>
+    )
 
 
     function getNextMonth() {
@@ -132,23 +152,20 @@ export default function Calendar( { callback } ) {
         return arrayOfDays
   }
 
+
     return (
-        <div className="calendar-container">
-            <MonthNavigator
-                getPrevMonth={getPrevMonth}
-                getNextMonth={getNextMonth}
-                date={new Date(year, month, day)}
-            />
-
-            <Weekdays/>
-
-            <DaysOfTheMonth
-                daysOfTheMonth={monthArray}
-                handlePick={handlePick}
-            />
-
-
-        </div>
+        <>
+        <MainWrapper>
+            <div className="calendar-container">
+                {activeComponent}
+            </div>
+        </MainWrapper>
+        {!showDayEditor &&
+            <footer>
+            <p className="footer-content">Calendar by Czmut</p>
+        </footer>
+        }
+        </>
     )
 }
 
