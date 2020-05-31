@@ -23,7 +23,7 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, 'assets'),
         contentBasePublicPath: '/',
-        port: 3000,
+        port: 5000,
         proxy: {
             '/api': 'http://localhost:3000'
         },
