@@ -61,7 +61,6 @@ export default function Calendar() {
   // changing month
   useEffect(() => {
     console.log("MONTH CHANGED: " + month)
-    //forceUpdate()
     
   }, [month])
 
@@ -118,7 +117,6 @@ export default function Calendar() {
             type: "UPDATE_MONTH_ARRAY",
             payload: updatedMonthArray
         })
-        forceUpdate()
     }
         
     function getPrevMonth() {
@@ -134,7 +132,6 @@ export default function Calendar() {
             type: "UPDATE_MONTH_ARRAY",
             payload: updatedMonthArray
         })
-        console.log("HEY")
     }
     
     function createMonthArray(date) {
