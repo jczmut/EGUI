@@ -48,7 +48,7 @@ export default function Calendar( { date, getPrevMonth, getNextMonth, handlePick
     var days = []
     for(let i=0; i<arrayOfWeeks.length; i++) {
         for(let j=0; j<arrayOfWeeks[i].length; j++) {
-            days.push(<Day dayNumber={arrayOfWeeks[i][j]} handlePick={handlePick} key={arrayOfWeeks[i][j]}/>)
+            days.push(<Day dayNumber={arrayOfWeeks[i][j]} handlePick={handlePick} key={arrayOfWeeks[i][j]+j}/>)
         }
     }
 
