@@ -8,6 +8,8 @@ using CzmutCalendar.Models;
 namespace CzmutCalendar.Controllers {
     public class ApiController : Controller {
 
+        [HttpGet]
+        [Route("api/events/{year:int}-{month:int}")]
         public IActionResult GetEventLists(int year, int month) {
 
             var data = new {
@@ -16,9 +18,6 @@ namespace CzmutCalendar.Controllers {
                 month = month,
                 events = new List<dynamic>()
             };
-
-            // to start indexing days from 1
-            data.events.Add(null);
 
             List<List<EventViewModel>> eventsDatabase;
 
@@ -29,7 +28,7 @@ namespace CzmutCalendar.Controllers {
                 return ShowError(e);
             }
 
-            for(int i=1; i<=eventsDatabase.Count; i++) {
+            for(int i=0; i<eventsDatabase.Count; i++) {
                 List<dynamic> dayEvents = new List<dynamic>();
 
                 foreach(EventViewModel singleEvent in eventsDatabase[i]) {

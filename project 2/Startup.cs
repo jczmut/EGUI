@@ -12,14 +12,12 @@ namespace CzmutCalendar
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseExceptionHandler("/error");
@@ -27,6 +25,7 @@ namespace CzmutCalendar
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -53,7 +52,7 @@ namespace CzmutCalendar
                     "api_event_lists", "api/events/{year}-{month}", new {controller="Api", action="GetEventLists"}
                 );
                 endpoints.MapControllerRoute(
-                    "api_error", "api/error", new {controller="api", action="ShowError"}
+                    "api_error", "api/error", new {controller="Api", action="ShowError"}
                 );
             });
         }
