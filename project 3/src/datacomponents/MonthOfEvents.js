@@ -17,10 +17,10 @@ class MonthOfEvents {
             this.month = month
         }
 
-        var events = []
+        this.events = []
         // array of arrays of events - an array for each day of the month
         for(let i = 0; i < getDaysInMonth(new Date(year, month, 1)); i++) {
-            events.push([])
+            this.events.push([])
         }
     }
 
