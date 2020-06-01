@@ -97,19 +97,6 @@ function App() {
       setOnPick(true)
     }
 
-    // function fetchData() {
-    //   setFetching(true)
-
-    //   // API call
-    //   fetch(`/api/events/${format(currentDate, "yyyy-MM")}`)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       setEvents(MonthOfEvents.getFromJSON(data))
-    //       console.log("json: " + data)
-    //     })
-
-    // }
-
   return (
       activeComponent
   )

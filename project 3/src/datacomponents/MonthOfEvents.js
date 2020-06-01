@@ -17,17 +17,16 @@ class MonthOfEvents {
             this.month = month
         }
 
-        // array of arrays of events
-        events = [null]
+        // array of arrays of events - an array for each day of the month
         for(let i = 0; i < getDaysInMonth(new Date(year, month, 1)); i++) {
             events.push([])
         }
     }
 
     static getFromJSON(json) {
-        let eventsArray = new MonthOfEvents(json.year, json.month)  // json.month - 1 ???
+        let eventsArray = new MonthOfEvents(json.year, json.month)
 
-        for(let i = 1; i < json.events.length; i++) {
+        for(let i = 0; i <= json.events.length; i++) {
             for(let j = 0; j < json.events[i].length; j++) {
                 const id = json.events[i][j].id
                 const description = json.events[i][j].description
