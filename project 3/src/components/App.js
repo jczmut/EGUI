@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar'
 import DayEditor from './DayEditor'
 import EventEditor from './EventEditor'
@@ -22,7 +22,7 @@ function App() {
     const [onPick, setOnPick] = useState(false)
     const [pickedDate, setPickedDate] = useState()
     //const [fetching, setFetching] = useState(false)
-    const [monthOfEvents, setMonthOfEvents] = useState()
+    const [monthOfEvents, setMonthOfEvents] = useState( new MonthOfEvents() )
 
     console.log(currentDate)
 
@@ -32,9 +32,14 @@ function App() {
       fetch(`api/events/${format(currentDate, "yyyy-M")}`)
         .then(response => response.json())
         .then(data => {
+          console.log(data)
           setMonthOfEvents(MonthOfEvents.getFromJSON(data))
         })
     }, [currentDate])
+
+    useEffect(() => {
+      console.log("MONTH EVENTS YEAR: " + monthOfEvents.year)
+    }, [monthOfEvents])
 
     useEffect(() => {
       console.log("MONTH CHANGED " + month)

@@ -49,11 +49,11 @@ export default function Calendar( { date, getPrevMonth, getNextMonth, handlePick
 
     return (
         <MainWrapper>
-            <div className="month-navigator header">
+            <header className="month-navigator">
                 <button className="prev"  onClick={getPrevMonth}>&#10094;</button>
                 <div>{format(date, "MMMM yyyy")}</div>
                 <button className="next" onClick={getNextMonth}>&#10095;</button>
-            </div>
+            </header>
             <div className="weekdays-row">
                 <div className="weekday-item">M</div>
                 <div className="weekday-item">T</div>

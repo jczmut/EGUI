@@ -1,6 +1,8 @@
 import React from 'react'
 import { format } from 'date-fns'
 import MainWrapper from './MainWrapper'
+import Event from '../datacomponents/Event'
+import DayEvent from './DayEvent'
 
 export default function DayEditor( { date, close, add }) {
 
@@ -12,10 +14,16 @@ export default function DayEditor( { date, close, add }) {
         add(date)
     }
 
+    var dayEvents = <DayEvent/>
+
+
     return (
         <MainWrapper smallversion>
             <div className="day-editor">
-                <h2 className="header">{format(date, "dd-MM-yyyy")}</h2>
+                <header className="small-header">
+                    <h2>{format(date, "dd MMMM yyyy")}</h2>
+                </header>
+                
                 <table className="events-table">
                     <thead>
                         <tr>
@@ -26,6 +34,12 @@ export default function DayEditor( { date, close, add }) {
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td>
+                                {dayEvents}
+                            </td>
+                            
+                        </tr>
                         <tr>
                             <td>
                                 <button className="day-editor-button" onClick={() => addNew(date)}>ADD NEW</button>

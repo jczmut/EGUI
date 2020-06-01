@@ -46,23 +46,29 @@ button.day-item-button, button.prev, button.next {
     font-family: fantasy;
 }
 
-.header {
+header {
     width: 100%;
-    height: 70px;
+    height: 60px;
     padding: 70px, 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     color: white;
     background: #addfc3;
     text-align: center;
+    align-items: center;
     font-family: fantasy;
+}
+
+.small-header h2 {
+    padding: 10px;
 }
 
 .month-navigator {
     text-transform: uppercase;
     letter-spacing: 3px;
+    height: 70px;
     font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .month-navigator .prev, .next {
@@ -104,4 +110,12 @@ button.day-item-button, button.prev, button.next {
 .day-item-button {
     font-size: 15px;
 }
+
+.inputs {
+    display: inline-block;
+}
+
+
+
+
 
