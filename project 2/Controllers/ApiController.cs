@@ -42,6 +42,58 @@ namespace CzmutCalendar.Controllers {
             return Json(data);
         }
 
+        [HttpGet]
+        [Route("api/day-events/{year:int}-{month:int}-{day:int}")]
+        public IActionResult GetDayEvents(int year, int month, int day) {
+            
+            var data = new {
+                status = "ok",
+                year = year,
+                month = month,
+                day = day,
+                events = new List<dynamic>()
+            };
+
+            List<EventViewModel> dayEvents;
+            try {
+                dayEvents = Database.ReadEventsFrom(new DateTime(year, month, day));
+            }
+            catch (Exception e) {
+                return ShowError(e);
+            }
+
+            foreach(EventViewModel singleEvent in dayEvents) {
+                data.events.Add(new {
+                    id = singleEvent.Id,
+                    time = ((DateTimeOffset)singleEvent.DateAndTime).ToUnixTimeSeconds()*1000,
+                    description = singleEvent.Description
+                });
+            }
+            return Json(data);
+        }
+
+        [HttpGet]
+        public IActionResult GetEvent(int id) {
+
+            EventViewModel singleEvent;
+            try {
+                singleEvent = Database.FindEvent(id);
+            }
+            catch (Exception e) {
+                return ShowError(e);
+            }
+
+            var data = new {
+                status = "ok",
+                id = singleEvent.Id,
+                time = ((DateTimeOffset)singleEvent.DateAndTime).ToUnixTimeSeconds()*1000,
+                description = singleEvent.Description
+            };
+
+            return Json(data);
+        }
+
+
         [ResponseCache(Location=ResponseCacheLocation.None, NoStore=true)]
         public IActionResult ShowError(Exception exception) {
 
