@@ -50,7 +50,7 @@ namespace CzmutCalendar
 
                 // API handling
                 endpoints.MapControllerRoute(
-                    "api_event_lists", "api/events/{year}-{month}", new {controller="Api", action="GetEventsList"}
+                    "api_event_lists", "api/events/{year}-{month}", new {controller="Api", action="GetEventLists"}
                 );
                 endpoints.MapControllerRoute(
                     "api_error", "api/error", new {controller="api", action="ShowError"}
