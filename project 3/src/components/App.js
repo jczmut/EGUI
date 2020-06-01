@@ -11,7 +11,6 @@ function App() {
   
   const [year, setYear] = useState(getYear(new Date()))
   const [month, setMonth] = useState(getMonth(new Date()))
-  const [dayNumber, setDayNumber] = useState(getDaysInMonth(new Date()))
   const [currentDate, setCurrentDate] = useState(new Date())
   const [activeComponent, setActiveComponent] = useState(
     <Calendar
@@ -23,18 +22,17 @@ function App() {
     const [onPick, setOnPick] = useState(false)
     const [pickedDate, setPickedDate] = useState()
     //const [fetching, setFetching] = useState(false)
-    const [events, setEvents] = useState()
+    const [monthOfEvents, setMonthOfEvents] = useState()
 
     console.log(currentDate)
 
     useEffect(() => {
-      console.log("FIRST FETCH")
+      console.log("FETCH")
       // API call
       fetch(`api/events/${format(currentDate, "yyyy-M")}`)
         .then(response => response.json())
         .then(data => {
-          setEvents(MonthOfEvents.getFromJSON(data.eventsLists))
-          console.log("json: " + data)
+          setMonthOfEvents(MonthOfEvents.getFromJSON(data))
         })
     }, [currentDate])
 
