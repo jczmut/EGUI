@@ -21,4 +21,12 @@ cd EGUI/'project 2'
 dotnet build
 dotnet run
 ```
+### project 3: React
+```bash
+git clone https://github.com/jczmut/EGUI.git
+cd EGUI/'project 3'
+npm install
+npm start
+```
+React is listening on port 5000
 
