@@ -30,7 +30,7 @@ class MonthOfEvents {
         console.log("eventsArray.month: " + eventsArray.month)
         console.log("eventsArray.events: " + eventsArray.events)
 
-        for(let i = 0; i <= json.events.length; i++) {
+        for(let i = 0; i < json.events.length; i++) {
             for(let j = 0; j < json.events[i].length; j++) {
                 const id = json.events[i][j].id
                 const description = json.events[i][j].description
