@@ -6,22 +6,28 @@ import DayEvent from './DayEvent'
 
 export default function DayEditor( { date, events, close, add }) {
 
-    function closeEditor() {
-        close(date)
+    const closeEditor = (e) => {
+        close(e)
     }
 
-    function addNew() {
-        add(date)
+    const addNew = (e) => {
+        add(e)
+    }
+
+    function editEvent(event) {
+        console.log("Edit")
+    }
+
+    function deleteEvent(event) {
+        console.log("Delete")
     }
 
     var dayEvents = []
     if(events) {
         for(let i=0; i<events.length; i++) {
-            dayEvents.push(<DayEvent event={events[i]} key={i}/>)
+            dayEvents.push(<DayEvent event={events[i]} modifyEvent={editEvent} deleteEvent={deleteEvent} key={i}/>)
         }
     }
-    
-
 
     return (
         <MainWrapper smallversion>
@@ -30,34 +36,23 @@ export default function DayEditor( { date, events, close, add }) {
                     <h2>{format(date, "dd MMMM yyyy")}</h2>
                 </header>
                 
-                <table className="events-table">
-                    <thead>
-                        <tr>
-                            <th className="events-header">TIME</th>
-                            <th className="events-header">DESCRIPTION</th>
-                            <th className="events-header"></th>
-                            <th className="events-header"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                {dayEvents}
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <td>
-                                <button className="day-editor-button" onClick={() => addNew(date)}>ADD NEW</button>
-                            </td>
-                            <td>
-                                <button className="day-editor-button" onClick={() => closeEditor(date)}>BACK</button>
-                            </td>
-                        </tr>
-                    </tbody>
+                <div>
+                    <div className="events-header">
+                        <div>TIME</div>
+                        <div>DESCRIPTION</div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div>
+                        {dayEvents}
+                    </div>
                     
+                    <div className="bottom-buttons-row">
+                        <button className="day-editor-button" onClick={e => addNew(date)}>ADD NEW</button>
+                        <button className="day-editor-button" onClick={e => closeEditor(date)}>BACK</button>
+                    </div>     
             
-                </table>
+                </div>
             </div>
         </MainWrapper>
         

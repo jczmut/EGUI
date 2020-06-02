@@ -44,6 +44,8 @@ function App() {
     const [onPick, setOnPick] = useState(false)
     const [pickedDate, setPickedDate] = useState()
 
+    console.log("PICKED DATE: " + pickedDate)
+
     useEffect(() => {
       console.log("MONTH CHANGED " + month)
       console.log("YEAR CHANGED " + year)
@@ -83,7 +85,7 @@ function App() {
 
     function ShowCalendar(date) {
       setActiveComponentName('calendar')
-        if(onPick) setOnPick(false)
+      if(onPick) setOnPick(false)
     }
 
     function ShowDayEditor(date) {

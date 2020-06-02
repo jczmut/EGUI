@@ -43,9 +43,7 @@ export default function Calendar( { date, getPrevMonth, getNextMonth, handlePick
     var days = []
     for(let i=0; i<arrayOfWeeks.length; i++) {
         for(let j=0; j<arrayOfWeeks[i].length; j++) {
-            //if(events.events.length > 0) console.log(events.events[i][j])
-            if(events.events.length > 0) days.push(<Day events={events.events[i][j]} dayNumber={arrayOfWeeks[i][j]} handlePick={handlePick} key={10*i + j}/>)
-            else days.push(<Day dayNumber={arrayOfWeeks[i][j]} handlePick={handlePick} key={10*i + j}/>)
+            days.push(<Day events={events.events[arrayOfWeeks[i][j]-1]} dayNumber={arrayOfWeeks[i][j]} handlePick={handlePick} key={10*i + j}/>)
         }
     }
 

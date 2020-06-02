@@ -119,7 +119,24 @@ header {
     display: inline-block;
 }
 
+.events-header {
+    display: grid;
+    grid-template-columns: 25% 49% 13% 13%;
+}
 
+.event-row {
+    display: grid;
+    grid-template-columns: 25% 49% 13% 13%;
+    
+}
+
+.bottom-buttons-row {
+    display: inline-block;
+}
+
+.time-description-header {
+    display: inline-block;
+}
 
 
 
