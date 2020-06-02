@@ -3,6 +3,7 @@ import Day from './Day'
 import MainWrapper from './MainWrapper'
 import { format, getDay, parseISO, getDaysInMonth, getMonth, getYear } from 'date-fns'
 
+
 export default function Calendar( { date, getPrevMonth, getNextMonth, handlePick, events } ) {
 
     function createMonthArray(date) {
@@ -42,7 +43,9 @@ export default function Calendar( { date, getPrevMonth, getNextMonth, handlePick
     var days = []
     for(let i=0; i<arrayOfWeeks.length; i++) {
         for(let j=0; j<arrayOfWeeks[i].length; j++) {
-            days.push(<Day dayNumber={arrayOfWeeks[i][j]} handlePick={handlePick} key={10*i + j}/>)
+            //if(events.events.length > 0) console.log(events.events[i][j])
+            if(events.events.length > 0) days.push(<Day events={events.events[i][j]} dayNumber={arrayOfWeeks[i][j]} handlePick={handlePick} key={10*i + j}/>)
+            else days.push(<Day dayNumber={arrayOfWeeks[i][j]} handlePick={handlePick} key={10*i + j}/>)
         }
     }
 

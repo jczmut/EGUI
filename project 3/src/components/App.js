@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar'
 import DayEditor from './DayEditor'
 import EventEditor from './EventEditor'
+import axios from 'axios'
 import { format, getMonth, getDay, getDaysInMonth, getDate, getYear, parseISO} from 'date-fns'
 import MonthOfEvents from '../datacomponents/MonthOfEvents';
+import Loader from './Loader'
 
 function App() {
 
   console.log("render")
+
+  const [activeComponentName, setActiveComponentName] = useState('calendar')
   
-  const [fetching, setFetching] = useState(true)
+  const [fetching, setFetching] = useState(false)
   const [year, setYear] = useState(getYear(new Date()))
   const [month, setMonth] = useState(getMonth(new Date()))
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -17,6 +21,7 @@ function App() {
 
     useEffect(() => {
       console.log("FIRST FETCH")
+      setFetching(true)
       // API call
       fetch(`api/events/${format(currentDate, "yyyy-M")}`)
         .then(response => response.json())
@@ -29,15 +34,13 @@ function App() {
         }
     }, [])
 
+    useEffect(() => {
+      if(fetching){
+        console.log("FETCHING")
+        setActiveComponentName('loader')
+      }
+    }, [fetching])
 
-    const [activeComponent, setActiveComponent] = useState(
-    <Calendar
-      date={currentDate}
-      getNextMonth={getNextMonth}
-      getPrevMonth={getPrevMonth}
-      handlePick={handlePick}
-      events={monthOfEvents}
-    />)
     const [onPick, setOnPick] = useState(false)
     const [pickedDate, setPickedDate] = useState()
 
@@ -51,6 +54,7 @@ function App() {
       .then(data => {
         console.log(data)
         setMonthOfEvents(MonthOfEvents.getFromJSON(data))
+        
       })
       return() => {
         setFetching(false)
@@ -58,45 +62,37 @@ function App() {
     }, [month, year])
 
     const [pickedDayEvents, setPickedDayEvents] = useState([])
-    const [showDay, setShowDay] = useState(false)
 
     useEffect(() => {
       if(onPick === true) {
         setCurrentDate(pickedDate)
         console.log("PICKED DAY " + getDate(pickedDate))
         console.log(monthOfEvents.events[(getDate(pickedDate))])
-        setPickedDayEvents(monthOfEvents.events[(getDate(pickedDate))])
-        ShowDayEditor(pickedDate)
+        console.log("MONTH EVENTS: ", monthOfEvents)
+        setPickedDayEvents(monthOfEvents.events[(getDate(pickedDate)-1)])
+        setActiveComponentName('dayEditor')
       }
     }, [pickedDate, onPick])
 
 
     useEffect(() => {
-      if(onPick === false) ShowCalendar(currentDate)
+      if(onPick === false) setActiveComponentName('calendar')
+      setFetching(false)
     }, [currentDate, onPick])
 
 
     function ShowCalendar(date) {
-      setActiveComponent(
-        <Calendar
-          date={currentDate}
-          getNextMonth={getNextMonth}
-          getPrevMonth={getPrevMonth}
-          handlePick={handlePick}
-          events={pickedDayEvents}
-          />
-        )
+      setActiveComponentName('calendar')
         if(onPick) setOnPick(false)
     }
 
     function ShowDayEditor(date) {
-        console.log("SHOW DAYEDITOR: "  + pickedDayEvents)
-        setActiveComponent(<DayEditor date={pickedDate} events={pickedDayEvents} close={ShowCalendar} add={ShowEventEditor}/>)
+        setActiveComponentName('dayEditor')
         setOnPick(true)
     }
 
     function ShowEventEditor(date) {
-      setActiveComponent(<EventEditor date={pickedDate} close={ShowDayEditor}/>)
+      setActiveComponentName('eventEditor')
     }
 
     function getNextMonth() {
@@ -125,11 +121,43 @@ function App() {
       setOnPick(true)
     }
 
-  return (
-      activeComponent
-  )
+
+  switch (activeComponentName) {
+    case 'loader':
+      return (
+        <Loader/>
+      )
+    case 'calendar':
+      return (
+        <>
+        <Calendar
+          date={currentDate}
+          getNextMonth={getNextMonth}
+          getPrevMonth={getPrevMonth}
+          handlePick={handlePick}
+          events={monthOfEvents}
+        />
+        </>
+      )
+    case 'dayEditor':
+      return (
+        <DayEditor
+          date={pickedDate}
+          events={pickedDayEvents}
+          close={ShowCalendar}
+          add={ShowEventEditor}
+        />
+      )
+      case 'eventEditor':
+        return (
+          <EventEditor
+            date={pickedDate}
+            close={ShowDayEditor}
+          />
+        )
+      default:
+        return <div>ERROR</div>
+  }      
 }
-
-
 
 export default App;
