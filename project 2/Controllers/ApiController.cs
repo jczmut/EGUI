@@ -73,6 +73,7 @@ namespace CzmutCalendar.Controllers {
         }
 
         [HttpGet]
+        [Route("api/event/{id:int}")]
         public IActionResult GetEvent(int id) {
 
             EventViewModel singleEvent;
@@ -91,6 +92,79 @@ namespace CzmutCalendar.Controllers {
             };
 
             return Json(data);
+        }
+
+        [HttpPost]
+        [Route("api/event/add/{year:int}-{month:int}-{day:int}")]
+        public IActionResult ModifyEvent(string time, string description, int year, int month, int day) {
+            
+            int hour;
+            int minute;
+            try {
+                hour = Convert.ToInt32(time.Substring(0, 2));
+                minute = Convert.ToInt32(time.Substring(3, 2));
+            }
+            catch (Exception) {
+                return ShowError(new ArgumentException("Invalid time."));
+            }
+
+            // creating a new event - id will be 0
+            EventViewModel newEvent = new EventViewModel(year, month, day, hour, minute);
+            newEvent.Description = description ?? "";
+            int newId = 0;
+            try {
+                Database.AddNewEvent(newEvent);
+            }
+            catch (Exception e) {
+                return ShowError(e);
+            }
+
+            return Json(new {
+                status="ok",
+                id=newId
+            });
+        }
+
+        [HttpPost]
+        [Route("api/event/{id:int}")]
+        public IActionResult ModifyEvent(int id, string time, string description) {
+
+            int hour;
+            int minute;
+            try {
+                hour = Convert.ToInt32(time.Substring(0, 2));
+                minute = Convert.ToInt32(time.Substring(3, 2));
+            }
+            catch (Exception) {
+                return ShowError(new ArgumentException("Invalid time."));
+            }
+
+            try {
+                Database.SaveEventData(id, hour, minute, description ?? "");
+            }
+            catch(Exception e) {
+                return ShowError(e);
+            }
+
+            return Json(new {
+                status="ok"
+            });
+        }
+
+        [HttpDelete]
+        [Route("api/event/{id:int")]
+        public IActionResult DeleteEvent(int id) {
+
+            try {
+                Database.DeleteEvent(id);
+            }
+            catch(Exception e) {
+                return ShowError(e);
+            }
+
+            return Json(new {
+                status="ok"
+            });
         }
 
 

@@ -55,6 +55,18 @@ namespace CzmutCalendar
                     "api_day_events", "api/day-events/{year}-{month}-{day}", new {controller="Api", action="GetDayEvents"}
                 );
                 endpoints.MapControllerRoute(
+                    "api_event", "api/event/{id}", new {controller="Api", action="GetEvent"}
+                );
+                endpoints.MapControllerRoute(
+                    "api_event", "api/event/add/{year}-{month}-{day}", new {controller="Api", action="ModifyEvent"}
+                );
+                endpoints.MapControllerRoute(
+                    "api_event", "api/event/{id}", new {controller="Api", action="ModifyEvent"}
+                );
+                endpoints.MapControllerRoute(
+                    "api_event", "api/event/{id}", new {controller="Api", action="DeleteEvent"}
+                );
+                endpoints.MapControllerRoute(
                     "api_error", "api/error", new {controller="Api", action="ShowError"}
                 );
             });
