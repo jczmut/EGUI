@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function DayEvent() {
+export default function DayEvent( { event } ) {
     return (
         <div>
-            events will be here
+            {event.description}
         </div>
     )
 }

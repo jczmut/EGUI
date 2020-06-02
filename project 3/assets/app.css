@@ -107,6 +107,10 @@ header {
     position: relative;
 }
 
+.day-item.occupied {
+    background-color: #addfc3;
+}
+
 .day-item-button {
     font-size: 15px;
 }

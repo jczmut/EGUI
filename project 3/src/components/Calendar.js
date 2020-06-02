@@ -3,7 +3,7 @@ import Day from './Day'
 import MainWrapper from './MainWrapper'
 import { format, getDay, parseISO, getDaysInMonth, getMonth, getYear } from 'date-fns'
 
-export default function Calendar( { date, getPrevMonth, getNextMonth, handlePick} ) {
+export default function Calendar( { date, getPrevMonth, getNextMonth, handlePick, events } ) {
 
     function createMonthArray(date) {
         var formattedDateString = format(date, "yyyy-MM-dd")
@@ -45,7 +45,6 @@ export default function Calendar( { date, getPrevMonth, getNextMonth, handlePick
             days.push(<Day dayNumber={arrayOfWeeks[i][j]} handlePick={handlePick} key={10*i + j}/>)
         }
     }
-
 
     return (
         <MainWrapper>

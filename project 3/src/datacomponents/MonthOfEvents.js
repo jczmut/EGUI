@@ -17,18 +17,21 @@ class MonthOfEvents {
             this.month = month
         }
 
-        this.events = [null]
+        this.events = []
         // array of arrays of events - an array for each day of the month
         for(let i = 0; i < getDaysInMonth(new Date(year, month, 1)); i++) {
             (this.events).push([])
         }
+
+        Object.defineProperties(this, {
+			year: { writable: false },
+			month: { writable: false },
+			events: { writable: false }
+		});
     }
 
     static getFromJSON(json) {
         let eventsArray = new MonthOfEvents(json.year, json.month)
-        console.log("eventsArray.year: " + eventsArray.year)
-        console.log("eventsArray.month: " + eventsArray.month)
-        console.log("eventsArray.events: " + eventsArray.events)
 
         for(let i = 0; i < json.events.length; i++) {
             for(let j = 0; j < json.events[i].length; j++) {
@@ -37,7 +40,6 @@ class MonthOfEvents {
                 eventsArray.events[i].push(new Event(id, new Date(0), description))
             }
         }
-        console.log("getFromJSON: eventsArray: "+eventsArray)
         return eventsArray
     }
 

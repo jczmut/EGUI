@@ -4,7 +4,7 @@ import MainWrapper from './MainWrapper'
 import Event from '../datacomponents/Event'
 import DayEvent from './DayEvent'
 
-export default function DayEditor( { date, close, add }) {
+export default function DayEditor( { date, events, close, add }) {
 
     function closeEditor() {
         close(date)
@@ -14,7 +14,13 @@ export default function DayEditor( { date, close, add }) {
         add(date)
     }
 
-    var dayEvents = <DayEvent/>
+    var dayEvents = []
+    if(events) {
+        for(let i=0; i<events.length; i++) {
+            dayEvents.push(<DayEvent event={events[i]} key={i}/>)
+        }
+    }
+    
 
 
     return (
