@@ -65,7 +65,7 @@ namespace CzmutCalendar.Controllers {
             foreach(EventViewModel singleEvent in dayEvents) {
                 data.events.Add(new {
                     id = singleEvent.Id,
-                    time = ((DateTimeOffset)singleEvent.DateAndTime).ToUnixTimeSeconds()*1000,
+                    dateAndTime = ((DateTimeOffset)singleEvent.DateAndTime).ToUnixTimeSeconds()*1000,
                     description = singleEvent.Description
                 });
             }
@@ -111,14 +111,14 @@ namespace CzmutCalendar.Controllers {
             // creating a new event - id will be 0
             EventViewModel newEvent = new EventViewModel(year, month, day, hour, minute);
             newEvent.Description = description ?? "";
-            int newId = 0;
             try {
                 Database.AddNewEvent(newEvent);
+                // newEvent now has some id defined
             }
             catch (Exception e) {
                 return ShowError(e);
             }
-
+            int newId = newEvent.Id;
             return Json(new {
                 status="ok",
                 id=newId
@@ -152,7 +152,7 @@ namespace CzmutCalendar.Controllers {
         }
 
         [HttpDelete]
-        [Route("api/event/{id:int")]
+        [Route("api/event/{id:int}")]
         public IActionResult DeleteEvent(int id) {
 
             try {
