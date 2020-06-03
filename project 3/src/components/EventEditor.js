@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MainWrapper from './MainWrapper'
 import Event from '../datacomponents/Event'
 import { format, getDate, getYear, getMonth } from 'date-fns'
@@ -8,8 +8,7 @@ export default function EventEditor( { date, close, save } ) {
     const [id, setId] = useState(0)
     const [description, setDescription] = useState("")
     const [time, setTime] = useState("12:00")
-    const [adding, setAdding] = useState(!event.id)
-
+    const [adding, setAdding] = useState(!id) 
     const handleClose = (e) => {
         close(date)
     }
@@ -29,7 +28,7 @@ export default function EventEditor( { date, close, save } ) {
         let url = `/api/event/${e.id}`
         // if adding
         if(adding) {
-            url = `api/event/add/${getYear(date)}-${getMonth(date) + 1}-${getDate(date)}`
+            url = 'api/event/add/'+getYear(date)+'-'+(getMonth(date)+1)+ '-' +getDate(date)
         }
 
         // API call
@@ -40,7 +39,7 @@ export default function EventEditor( { date, close, save } ) {
                     '&description=' + encodeURIComponent(description)
         })
         .then(response => response.json())
-        .then(() => {
+        .then((data) => {
             // if everything went ok, close the editor
             console.log(data)
             close(date)

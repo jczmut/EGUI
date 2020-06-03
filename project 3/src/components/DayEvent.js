@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { format } from 'date-fns'
 
 export default function DayEvent( { event, modifyEvent, deleteEvent } ) {
+
+    
 
     const handleEdit = (e) => {
         modifyEvent(e)
@@ -13,7 +16,7 @@ export default function DayEvent( { event, modifyEvent, deleteEvent } ) {
     return (
         <div className="event-row">
             <div>
-                {event.time}
+                {format(event.dateAndTime, "HH:mm")}
             </div>
             <div>
                 {event.description}
