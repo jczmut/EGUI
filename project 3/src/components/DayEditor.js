@@ -33,9 +33,6 @@ export default function DayEditor( { date, events, close, modify, add }) {
 
     }, [applyChanges])
 
-    console.log("DAY EVENTS")
-    console.log(dayEvents)
-
     const handleClose = (e) => {
         close(e)
     }
@@ -44,13 +41,11 @@ export default function DayEditor( { date, events, close, modify, add }) {
         add(e)
     }
 
-    function editEvent(e) {
-        modify(e)
+    function editEvent(id) {
+        modify(id)
     }
 
     function deleteEvent(id) {
-
-        console.log("Delete " + id)
         // API call
         let url = `/api/event/${id}`
         fetch(url, {
@@ -60,9 +55,8 @@ export default function DayEditor( { date, events, close, modify, add }) {
         })
         .then(response => response.json())
         .then((data) => {
-            // if everything went ok, close the editor
+            // if everything went ok
             console.log(data)
-            close(date)
         })
         .catch(error => {
             alert('Error while deleting event.')
@@ -74,7 +68,14 @@ export default function DayEditor( { date, events, close, modify, add }) {
     var dayEventsToRender = []
     if(dayEvents) {
         for(let i=0; i<dayEvents.length; i++) {
-            dayEventsToRender.push(<DayEvent event={dayEvents[i]} modifyEvent={editEvent} deleteEvent={deleteEvent} key={i}/>)
+            dayEventsToRender.push(
+            <DayEvent
+                event={dayEvents[i]}
+                modifyEvent={() => editEvent(dayEvents[i].id)}
+                deleteEvent={deleteEvent}
+                key={i}
+            />
+            )
         }
     }
       

@@ -8,47 +8,34 @@ import MonthOfEvents from '../datacomponents/MonthOfEvents';
 
 function App() {
 
-  console.log("render")
-
   const [activeComponentName, setActiveComponentName] = useState('calendar')
-  
   const [year, setYear] = useState(getYear(new Date()))
   const [month, setMonth] = useState(getMonth(new Date()))
   const [currentDate, setCurrentDate] = useState(new Date())
   const [monthOfEvents, setMonthOfEvents] = useState(new MonthOfEvents())
 
     useEffect(() => {
-      console.log("FIRST FETCH")
       // API call
       fetch(`api/events/${format(currentDate, "yyyy-M")}`)
         .then(response => response.json())
         .then(data => {
           console.log(data)
+          // set the array of arrays of events for this month
           setMonthOfEvents(MonthOfEvents.getFromJSON(data))
         })
     }, [])
 
-
     const [onPick, setOnPick] = useState(false)
     const [pickedDate, setPickedDate] = useState()
 
-    console.log("PICKED DATE: " + pickedDate)
-
     useEffect(() => {
-      console.log("MONTH CHANGED " + month)
-      console.log("YEAR CHANGED " + year)
       setCurrentDate(new Date(year, month, 1))
-      //setFetching(true)
       fetch(`api/events/${year}-${month+1}`)
       .then(response => response.json())
       .then(data => {
         console.log(data)
         setMonthOfEvents(MonthOfEvents.getFromJSON(data))
-        
       })
-      return() => {
-        //setFetching(false)
-      }
     }, [month, year, activeComponentName])
 
     const [pickedDayEvents, setPickedDayEvents] = useState([])
@@ -56,19 +43,17 @@ function App() {
     useEffect(() => {
       if(onPick === true) {
         setCurrentDate(pickedDate)
-        console.log("PICKED DAY " + getDate(pickedDate))
         console.log(monthOfEvents.events[(getDate(pickedDate))])
-        console.log("MONTH EVENTS: ", monthOfEvents)
         setPickedDayEvents(monthOfEvents.events[(getDate(pickedDate)-1)])
         setActiveComponentName('dayEditor')
       }
     }, [pickedDate, onPick])
 
-
     useEffect(() => {
       if(onPick === false) setActiveComponentName('calendar')
     }, [currentDate, onPick])
 
+    const [editedEvent, setEditedEvent] = useState(null)
 
     function ShowCalendar(date) {
       setActiveComponentName('calendar')
@@ -81,6 +66,13 @@ function App() {
     }
 
     function ShowEventEditor(id) {
+      // searching for table with proper event
+      let editedEvent = monthOfEvents.events.find((eventDay) =>
+          eventDay.find((event) => event.id === id)
+      )
+      // searching for a proper event
+      editedEvent = editedEvent.find((event) => event.id === id)
+      setEditedEvent(editedEvent)
       setActiveComponentName('eventEditor')
     }
 
@@ -89,7 +81,6 @@ function App() {
     }
 
     function getNextMonth() {
-      console.log("Get next month")
       var nextMonth = month + 1
       if(nextMonth === 12) {
         nextMonth = 0
@@ -99,7 +90,6 @@ function App() {
     }
       
     function getPrevMonth() {
-      console.log("Get previous month")
       var prevMonth = month -1
       if(prevMonth === -1) {
         prevMonth = 11
@@ -109,20 +99,14 @@ function App() {
     }
 
     function handlePick(day) {
-      console.log("NOTIFY ABOUT DAY PICK")
       setPickedDate(new Date(year, month, day))
       setOnPick(true)
     }
 
 
   switch (activeComponentName) {
-    case 'loader':
-      return (
-        <Loader/>
-      )
     case 'calendar':
       return (
-        <>
         <Calendar
           date={currentDate}
           getNextMonth={getNextMonth}
@@ -130,7 +114,6 @@ function App() {
           handlePick={handlePick}
           events={monthOfEvents}
         />
-        </>
       )
     case 'dayEditor':
       return (
@@ -145,7 +128,7 @@ function App() {
       case 'eventEditor':
         return (
           <EventEditor
-            id={}
+            event={editedEvent}
             close={ShowDayEditor}
           />
         )

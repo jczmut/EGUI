@@ -4,15 +4,7 @@ import { format } from 'date-fns'
 export default function DayEvent( { event, modifyEvent, deleteEvent } ) {
 
     const handleEdit = (e) => {
-        console.log("EDITING THIS EVENT:   " + e.id)
-        // fetch(`api/event/${e.id}`)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log(data)
-        //         thisEvent = Event.getFromJSON(data)
-        
-        //     })
-        modifyEvent(e.id)
+        modifyEvent(e)
     }
 
     const handleDelete = (e) => {
@@ -28,7 +20,7 @@ export default function DayEvent( { event, modifyEvent, deleteEvent } ) {
                 {event.description}
             </div>
             <div>
-                <button className="button-item smaller" onClick={e => handleEdit(event)}>EDIT</button>
+                <button className="button-item smaller" onClick={e => handleEdit(event.id)}>EDIT</button>
             </div>
             <div>
             <button className="button-item smaller" onClick={e => handleDelete(event.id)}>DELETE</button>

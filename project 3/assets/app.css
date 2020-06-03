@@ -102,7 +102,7 @@ header {
     flex: 0 1 calc(12% - 6px);
     align-self: center;
     background-color: rgb(207, 214, 212);
-    min-height: 20px;
+    min-height: 25px;
     padding: 5px;
     position: relative;
 }
@@ -155,8 +155,15 @@ header {
 }
 
 .button-item {
-    padding: 3px;
+    padding: 8px;
     margin: 3px;
+    background-color: #92b8a2;
+    font-size: 15px;
+}
+
+.button-item.smaller {
+    font-size: 14px;
+    padding: 6px;
 }
 
 .time-description-header {

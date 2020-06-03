@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import MainWrapper from './MainWrapper'
-import Event from '../datacomponents/Event'
-import { format, getDate, getYear, getMonth } from 'date-fns'
+import { getDate, getYear, getMonth } from 'date-fns'
 
 export default function EventAdder( { date, close } ) {
 
@@ -15,8 +14,6 @@ export default function EventAdder( { date, close } ) {
     const handleSubmit = (e) => {
         // communicate with API to add new or edit existing event
         e.preventDefault()
-        console.log(`Submitting description ${description}`)
-        console.log(`Submitting time ${time}`)
 
         // format the url
         var url = 'api/event/add/' + getYear(date) + '-' + (getMonth(date)+1) + '-' + getDate(date)
