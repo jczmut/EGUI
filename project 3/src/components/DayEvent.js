@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { format } from 'date-fns'
 
 export default function DayEvent( { event, modifyEvent, deleteEvent } ) {
 
-    
-
     const handleEdit = (e) => {
-        modifyEvent(e)
+        console.log("EDITING THIS EVENT:   " + e.id)
+        // fetch(`api/event/${e.id}`)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data)
+        //         thisEvent = Event.getFromJSON(data)
+        
+        //     })
+        modifyEvent(e.id)
     }
 
     const handleDelete = (e) => {
@@ -22,10 +28,10 @@ export default function DayEvent( { event, modifyEvent, deleteEvent } ) {
                 {event.description}
             </div>
             <div>
-                <button className="day-editor-button smaller" onClick={e => handleEdit(event)}>EDIT</button>
+                <button className="button-item smaller" onClick={e => handleEdit(event)}>EDIT</button>
             </div>
             <div>
-            <button className="day-editor-button smaller" onClick={e => handleDelete(event)}>DELETE</button>
+            <button className="button-item smaller" onClick={e => handleDelete(event.id)}>DELETE</button>
             </div>
             
             

@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar'
 import DayEditor from './DayEditor'
 import EventEditor from './EventEditor'
-import axios from 'axios'
-import { format, getMonth, getDay, getDaysInMonth, getDate, getYear, parseISO} from 'date-fns'
+import EventAdder from './EventAdder'
+import { format, getMonth, getDate, getYear } from 'date-fns'
 import MonthOfEvents from '../datacomponents/MonthOfEvents';
-import Loader from './Loader'
 
 function App() {
 
@@ -13,7 +12,6 @@ function App() {
 
   const [activeComponentName, setActiveComponentName] = useState('calendar')
   
-  const [fetching, setFetching] = useState(false)
   const [year, setYear] = useState(getYear(new Date()))
   const [month, setMonth] = useState(getMonth(new Date()))
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -21,7 +19,6 @@ function App() {
 
     useEffect(() => {
       console.log("FIRST FETCH")
-      setFetching(true)
       // API call
       fetch(`api/events/${format(currentDate, "yyyy-M")}`)
         .then(response => response.json())
@@ -29,17 +26,8 @@ function App() {
           console.log(data)
           setMonthOfEvents(MonthOfEvents.getFromJSON(data))
         })
-        return() => {
-          setFetching(false)
-        }
     }, [])
 
-    useEffect(() => {
-      if(fetching){
-        console.log("FETCHING")
-        setActiveComponentName('loader')
-      }
-    }, [fetching])
 
     const [onPick, setOnPick] = useState(false)
     const [pickedDate, setPickedDate] = useState()
@@ -50,7 +38,7 @@ function App() {
       console.log("MONTH CHANGED " + month)
       console.log("YEAR CHANGED " + year)
       setCurrentDate(new Date(year, month, 1))
-      setFetching(true)
+      //setFetching(true)
       fetch(`api/events/${year}-${month+1}`)
       .then(response => response.json())
       .then(data => {
@@ -59,9 +47,9 @@ function App() {
         
       })
       return() => {
-        setFetching(false)
+        //setFetching(false)
       }
-    }, [month, year])
+    }, [month, year, activeComponentName])
 
     const [pickedDayEvents, setPickedDayEvents] = useState([])
 
@@ -79,7 +67,6 @@ function App() {
 
     useEffect(() => {
       if(onPick === false) setActiveComponentName('calendar')
-      setFetching(false)
     }, [currentDate, onPick])
 
 
@@ -93,8 +80,12 @@ function App() {
         setOnPick(true)
     }
 
-    function ShowEventEditor(date) {
+    function ShowEventEditor(id) {
       setActiveComponentName('eventEditor')
+    }
+
+    function ShowEventAdder(date) {
+      setActiveComponentName('eventAdder')
     }
 
     function getNextMonth() {
@@ -147,12 +138,20 @@ function App() {
           date={pickedDate}
           events={pickedDayEvents}
           close={ShowCalendar}
-          add={ShowEventEditor}
+          modify={ShowEventEditor}
+          add={ShowEventAdder}
         />
       )
       case 'eventEditor':
         return (
           <EventEditor
+            id={}
+            close={ShowDayEditor}
+          />
+        )
+        case 'eventAdder':
+        return (
+          <EventAdder
             date={pickedDate}
             close={ShowDayEditor}
           />

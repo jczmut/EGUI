@@ -5,12 +5,14 @@ import Event from '../datacomponents/Event'
 import DayEvent from './DayEvent'
 import { getYear, getMonth, getDate } from 'date-fns'
 
-export default function DayEditor( { date, events, close, add }) {
+export default function DayEditor( { date, events, close, modify, add }) {
 
-    const [dayEvents, setDayEvents] = useState()
+    const [dayEvents, setDayEvents] = useState(events)
+    const [applyChanges, setApplyChanges] = useState(true)
 
     useEffect(() => {
-        fetch(`api/day-events/${getYear(date)}-${getMonth(date)}-${getDate(date)}`)
+        if(applyChanges) {
+            fetch(`api/day-events/${getYear(date)}-${getMonth(date)+1}-${getDate(date)}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -24,20 +26,12 @@ export default function DayEditor( { date, events, close, add }) {
                 alert("Error while loading day events.")
                 console.error(error)
             })
+        }
+        return (
+            setApplyChanges(false)
+        )
 
-    }, [])
-
-    // useEffect(() => {
-    //     var dayEventsArray = []
-    //         if(events) {
-    //             for(let i=0; i<events.length; i++) {
-    //                 events[i].dateAndTime = new Date(date)
-    //                 console.log(events[i])
-    //                 dayEventsArray.push(events[i])
-    //             }
-    //         }
-    //     setDayEvents(dayEventsArray)
-    // }, [])
+    }, [applyChanges])
 
     console.log("DAY EVENTS")
     console.log(dayEvents)
@@ -50,12 +44,31 @@ export default function DayEditor( { date, events, close, add }) {
         add(e)
     }
 
-    function editEvent(event) {
-        console.log("Edit")
+    function editEvent(e) {
+        modify(e)
     }
 
-    function deleteEvent(event) {
-        console.log("Delete")
+    function deleteEvent(id) {
+
+        console.log("Delete " + id)
+        // API call
+        let url = `/api/event/${id}`
+        fetch(url, {
+            method: 'delete',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UFT-8'},
+            body: 'id=' + id
+        })
+        .then(response => response.json())
+        .then((data) => {
+            // if everything went ok, close the editor
+            console.log(data)
+            close(date)
+        })
+        .catch(error => {
+            alert('Error while deleting event.')
+            console.error(error)
+        })
+        setApplyChanges(true)
     }
 
     var dayEventsToRender = []
@@ -84,8 +97,8 @@ export default function DayEditor( { date, events, close, add }) {
                     </div>
                     
                     <div className="bottom-buttons-row">
-                        <button className="day-editor-button" onClick={e => handleAddNew(date)}>ADD NEW</button>
-                        <button className="day-editor-button" onClick={e => handleClose(date)}>BACK</button>
+                        <button className="button-item" onClick={e => handleAddNew(date)}>ADD NEW</button>
+                        <button className="button-item" onClick={e => handleClose(date)}>BACK</button>
                     </div>     
             
                 </div>

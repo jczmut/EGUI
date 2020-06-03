@@ -3,14 +3,11 @@ import MainWrapper from './MainWrapper'
 import Event from '../datacomponents/Event'
 import { format, getDate, getYear, getMonth } from 'date-fns'
 
-export default function EventEditor( { id, close } ) {
-
-    console.log("EDIT EVENT!!! "+ date)
+export default function EventAdder( { date, close } ) {
 
     const [description, setDescription] = useState("")
     const [time, setTime] = useState("12:00")
-    //const [id, setId] = useState(event.id)
-
+    
     const handleClose = (e) => {
         close(date)
     }
@@ -21,16 +18,14 @@ export default function EventEditor( { id, close } ) {
         console.log(`Submitting description ${description}`)
         console.log(`Submitting time ${time}`)
 
-
-
         // format the url
-        var url = `/api/event/${id}`
+        var url = 'api/event/add/' + getYear(date) + '-' + (getMonth(date)+1) + '-' + getDate(date)
 
         // API call
         fetch(url, {
             method: 'post',
             headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UFT-8'},
-            body: 'id=' + id + '&time=' + encodeURIComponent(time) +
+            body: 'id=' + e.id + '&time=' + encodeURIComponent(time) +
                     '&description=' + encodeURIComponent(description)
         })
         .then(response => response.json())
@@ -49,7 +44,7 @@ export default function EventEditor( { id, close } ) {
     return (
         <MainWrapper smallversion>
             <header className="small-header">
-            <h2>Edit event</h2>
+            <h2>Add new event</h2>
             </header>
             <form onSubmit={handleSubmit} className="inputs">
                 <div className="input-div">
