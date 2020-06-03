@@ -28,5 +28,6 @@ cd EGUI/'project 3'
 npm install
 npm start
 ```
-React is listening on port 5000
+To launch the React application, ASP.NET app also has to be launched as it serves as an API.
+React is listening on port 5000, ASP.NET - on port 3000.
 
